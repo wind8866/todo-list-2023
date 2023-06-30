@@ -1,5 +1,5 @@
 {
-  "name": "next",
+  "name": "@todo-list/next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@todo-list/server": "workspace:^",
     "@types/node": "20.3.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",

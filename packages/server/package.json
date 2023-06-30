@@ -1,13 +1,17 @@
 {
-  "name": "todo-list-2023",
+  "name": "@todo-list/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "next": "cd packages/next && npm run dev"
+    "start": "tsx index.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "tsx": "^3.12.7"
+  }
 }
