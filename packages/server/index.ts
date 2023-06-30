@@ -1,7 +1,6 @@
 // 参考：https://chuyao.github.io/2017/07/11/simple-api-server-with-nodejs/
 
-const express = require("express");
-const app = express();
+import express from "express";
 
 export interface Todo {
   id: number;
@@ -9,6 +8,8 @@ export interface Todo {
   finish: boolean;
 }
 
+const app = express();
+app.use(express.json());
 function sleep(min: number = 100, max: number = 1000) {
   const time = Math.floor(Math.random() * (max - min + 1) + min);
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -18,12 +19,12 @@ function sleep(min: number = 100, max: number = 1000) {
 let todoList: Todo[] = [
   {
     id: 1,
-    text: "TodoList from React",
+    text: "React",
     finish: true,
   },
   {
     id: 2,
-    text: "TodoList from jQuery",
+    text: "jQuery",
     finish: false,
   },
 ];
@@ -48,24 +49,27 @@ app.all("*", function (req, res, next) {
 
 // 请求 todoList 接口
 app.get("/api/list", async (req, res) => {
-  await sleep();
+  await sleep(0, 500);
   res.send(formatRespond({ data: todoList }));
 });
 
 // 添加 todo 接口
-app.get("/api/add", async (req, res) => {
-  if (req.query.text != null) {
+app.post("/api/add", async (req, res) => {
+  if (!req.body) {
+    throw new Error("请求参数错误");
+  }
+  if (req.body.text != null) {
     const todo: Todo = {
       id: ++count,
-      text: req.query.text,
+      text: String(req.body.text),
       finish: false,
     };
     todoList.push(todo);
-    console.log("请求成功", req.query);
+    console.log("请求成功", req.body);
     await sleep();
     res.send(formatRespond({ data: todo }));
   } else {
-    console.error("请求失败", req.query);
+    console.error("请求失败", req.body);
     await sleep(500, 1000);
     res.send(formatRespond({ code: 501 }));
   }
@@ -76,7 +80,7 @@ app.get("/api/change", async (req, res) => {
   console.log(req.query);
   if (req.query.id != null) {
     todoList = todoList.map((todo) => {
-      if (req.query.id === todo.id) {
+      if (req.query.id === String(todo.id)) {
         const newTodo = {
           ...todo,
           finish: !todo.finish,
@@ -95,9 +99,12 @@ app.get("/api/change", async (req, res) => {
 });
 
 // delTodo 接口
-app.get("/api/del", async (req, res) => {
+app.post("/api/del", async (req, res) => {
+  if (!req.body) {
+    throw new Error("请求参数错误");
+  }
   if (req.query.id != null) {
-    todoList = todoList.filter((todo) => req.query.id !== todo.id);
+    todoList = todoList.filter((todo) => req.query.id !== String(todo.id));
     await sleep();
     res.send(formatRespond({ code: 200 }));
   } else {
