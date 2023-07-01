@@ -6,6 +6,7 @@ export interface Todo {
   id: number;
   text: string;
   finish: boolean;
+  create_time?: string;
 }
 
 const app = express();

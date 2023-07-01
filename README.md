@@ -1,9 +1,28 @@
-- next + tailwind 1d
+- ⏳next + tailwind
 - react-tookit 1d
 - vue 1d
 - qiankun 1d
 - resustfull 接口
 - server 支持热更新
+- 支持部署到 vercel
+
+## next
+
+- 服务端渲染
+  - 非交互组件使用服务端渲染，交互使用客户端
+  - 已有数据直接返回而不是前端请求
+- 接口服务
+  - 对外提供完整的接口服务
+  - 接口遵循 RESTful API
+  - 对外提供自动生成的接口文档（可选）
+- 数据存储使用数据库
+  - 在适当的时候关闭数据库连接
+- v2.0
+  - 支持操作日志
+  - 支持按用户的鉴权管理
+  - 支持第三方登录（github、微信）
+
+## 命令记录
 
 ```shell
 pnpm init
