@@ -2,7 +2,7 @@
 import type { ITodo } from '../../utils/types'
 import TodoItem from './todo'
 import AddTodo from './add-todo'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { queryAddTodo, queryChangeTodo, queryDeleteTodo } from './server'
 
 export default function TodoList({
@@ -11,12 +11,16 @@ export default function TodoList({
   initialList: ITodo[]
 }) {
   const [list, setList] = useState(initialList)
+  const [hideFinish, setHideFinish] = useState(false)
+  const filterList = useMemo(() => {
+    if (hideFinish) {
+      return list.filter((todo) => !todo.finish)
+    }
+    return list
+  }, [list, hideFinish])
 
-  async function onFinish(id: number) {
-    const newTodo = await queryChangeTodo({
-      id,
-      finish: !list.find((todo) => todo.id === id)?.finish,
-    })
+  async function onFinish(id: number, finish: boolean) {
+    const newTodo = await queryChangeTodo({ id, finish })
     setList(
       list.map((todo) => {
         return todo.id === id ? newTodo : todo
@@ -26,7 +30,7 @@ export default function TodoList({
   async function onAdd(value: string): Promise<boolean> {
     try {
       const newTodo = await queryAddTodo(value)
-      setList([...list, newTodo])
+      setList([newTodo, ...list])
       return true
     } catch (error) {
       return false
@@ -34,7 +38,7 @@ export default function TodoList({
   }
   async function onDelete(id: number): Promise<boolean> {
     try {
-      const newTodo = await queryDeleteTodo(id)
+      await queryDeleteTodo(id)
       setList(list.filter((todo) => todo.id !== id))
       return true
     } catch (error) {
@@ -44,9 +48,17 @@ export default function TodoList({
 
   return (
     <div className="h-screen">
-      <AddTodo onAdd={onAdd} />
+      <div className="flex justify-end">
+        <AddTodo onAdd={onAdd} />
+        <button
+          className="px-4 py-2 text-white bg-blue-500 rounded-md ml-4"
+          onClick={() => setHideFinish(!hideFinish)}
+        >
+          {hideFinish ? 'Show' : 'Hide'}
+        </button>
+      </div>
       <ul>
-        {list.map((todo) => (
+        {filterList.map((todo) => (
           <TodoItem
             key={todo.id}
             todo={todo}

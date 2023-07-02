@@ -16,7 +16,18 @@ export default function TodoList({
   }
   return (
     <label className="cursor-pointer">
-      <input ref={inputRef} type="text" />
+      <input
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            handleSubmit()
+            setTimeout(() => {
+              inputRef.current?.focus()
+            }, 0)
+          }
+        }}
+        ref={inputRef}
+        type="text"
+      />
       <button
         className="border bg-blue-500 text-white px-4 py-2"
         onClick={handleSubmit}

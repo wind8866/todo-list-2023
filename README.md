@@ -21,6 +21,28 @@
   - 支持操作日志
   - 支持按用户的鉴权管理
   - 支持第三方登录（github、微信）
+  - 参考 github 的 RESTful 的错误处理
+
+**MySQL**
+
+```
+# 新增
+affectedRows: 1
+fieldCount: 0
+info: ''
+insertId: 3
+serverStatus:2
+warningStatus: 0
+
+
+# 删除
+affectedRows: 1
+fieldCount: 0
+info: ''
+insertId: 0
+serverStatus: 2
+warningStatus: 0
+```
 
 ## 命令记录
 

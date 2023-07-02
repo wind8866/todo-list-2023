@@ -7,11 +7,11 @@ export default function Todo({
   onDelete,
 }: {
   todo: Todo
-  onFinish: (id: number) => void
+  onFinish: (id: number, finish: boolean) => void
   onDelete: (id: number) => Promise<boolean>
 }) {
   function change() {
-    onFinish(todo.id)
+    onFinish(todo.id, !todo.finish)
   }
   function del() {
     onDelete(todo.id)
@@ -25,8 +25,10 @@ export default function Todo({
           checked={todo.finish}
           onChange={change}
         />
-        <span className="px-1">{todo.text}</span>
-        <button onClick={del}>x</button>
+        <span style={{ padding: '0 0.5rem' }} className="inline-block px-1">
+          {todo.text}
+        </span>
+        <button onClick={del}>删除</button>
       </label>
     </li>
   )

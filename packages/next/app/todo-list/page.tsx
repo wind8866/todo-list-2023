@@ -3,8 +3,7 @@ import type { ITodo } from '../../utils/types'
 import TodoList from './todo-list'
 
 export default async function Page() {
-  // TODO: ts 类型
-  const initialList: ITodo[] = (await dbQueryList()) as ITodo[]
+  const initialList = await dbQueryList()
   return (
     <div className="h-screen">
       <TodoList initialList={initialList} />

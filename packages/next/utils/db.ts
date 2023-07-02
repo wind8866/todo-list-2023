@@ -1,5 +1,6 @@
-import mysql from 'mysql2/promise'
+import mysql, { RowDataPacket, OkPacket } from 'mysql2/promise'
 import type { ITodo } from './types'
+import dayjs from 'dayjs'
 
 // SHOW DATABASES;
 // CREATE DATABASE todolist;
@@ -32,46 +33,65 @@ export async function dbClose() {
 }
 
 // select * from main;
-export async function dbQueryList() {
+export async function dbQueryList(id?: number) {
+  let sql = 'select * from main'
+  if (id != null) {
+    sql += ` where id=${id}`
+  }
+  sql += ' order by create_time desc'
   const db = await dbConnection()
-  const [rows, fields] = await db.execute('select * from main')
+  const [rows, fields] = await db.execute<ITodo[] & RowDataPacket[][]>(sql)
   return rows
 }
 
 // insert into main (text, create_time, finish) values ('mysql', '2016-05-06', 0);
-export async function dbAddTodo(text: string) {
+export async function dbAddTodo(text: string): Promise<ITodo> {
   const db = await dbConnection()
-  const time = new Date().toString()
-  const sql = `insert into main (mysql, create_time, finish) values (${text}, ${time}, 0);`
-  const [rows, fields] = await db.execute(sql)
+  const time = dayjs().format('YYYY-MM-DD hh:mm:ss')
+  const sql = `insert into main (text, create_time, finish) values ("${text}", "${time}", 0);`
+  const [rows, fields] = await db.execute<OkPacket>(sql)
 
   console.log('[Add Log]: ', new Date(), text, JSON.stringify(rows))
-  return rows
+  const res = {
+    id: rows.insertId,
+    text,
+    create_time: time,
+    finish: false,
+  }
+  return {
+    id: rows.insertId,
+    text,
+    create_time: time,
+    finish: false,
+  }
 }
 
 // update main set text="MySQL" where id=1;
-export async function dbUpdateTodo(todo: Partial<ITodo>) {
+export async function dbUpdateTodo(todo: Partial<ITodo>): Promise<ITodo> {
   let set = ''
-  if (todo.text) {
+  if (todo.text != null) {
     set += `text="${todo.text}" `
-  } else if (todo.finish) {
+  } else if (todo.finish != null) {
     set += `finish=${todo.finish ? 1 : 0} `
-  } else if (todo.create_time) {
+  } else if (todo.create_time != null) {
     set += `create_time=${todo.create_time} `
   }
   const db = await dbConnection()
   const sql = `update main set ${set} where id=${todo.id}`
-  const [rows, fields] = await db.execute(sql)
-
+  const [rows, fields] = await db.execute<ITodo & RowDataPacket[]>(sql)
   console.log('[Update Log]: ', new Date(), todo.id, JSON.stringify(todo), rows)
-  return rows
+
+  const list = await dbQueryList(todo.id)
+  if (list.length === 0) throw new Error('Not Found')
+  return list[0]
 }
 
 // delete from main where id=2;
 export async function dbDeleteTodo(id: number) {
   const db = await dbConnection()
-  const [rows, fields] = await db.execute('delete from main where id=?', [id])
-
+  const [rows, fields] = await db.execute<OkPacket>(
+    'delete from main where id=?',
+    [id],
+  )
   console.log('[Delete Log]: ', new Date(), id, rows)
-  return rows
 }
