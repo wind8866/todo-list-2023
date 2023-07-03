@@ -1,16 +1,21 @@
 import Link from 'next/link'
+import Header from '../components/Header'
 
 export default async function Page() {
   return (
-    <div className="h-screen">
-      <h1>Hello, TodoList!</h1>
-      <img src="logo.svg" alt="logo" />
+    <div className="text-center h-screen">
+      <Header />
+      <h2 className="text-2xl">Projects</h2>
       <ul>
         <li>
-          <Link href="/todo-list">Todo List</Link>
+          <Link className="underline" href="/todo-list">
+            Todo List
+          </Link>
         </li>
         <li>
-          <Link href="/demo">demo</Link>
+          <Link className="underline" href="/demo">
+            demo
+          </Link>
         </li>
       </ul>
     </div>

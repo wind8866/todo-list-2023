@@ -47,11 +47,11 @@ export default function TodoList({
   }
 
   return (
-    <div className="h-screen">
-      <div className="flex justify-end">
+    <div className="h-screen text-center">
+      <div className="flex justify-center">
         <AddTodo onAdd={onAdd} />
         <button
-          className="px-4 py-2 text-white bg-blue-500 rounded-md ml-4"
+          className="w-20 py-2 text-white bg-green-600 dark:bg-green-800 rounded-md ml-4"
           onClick={() => setHideFinish(!hideFinish)}
         >
           {hideFinish ? 'Show' : 'Hide'}

@@ -15,8 +15,9 @@ export default function TodoList({
     }
   }
   return (
-    <label className="cursor-pointer">
+    <label className="cursor-pointer pl-16">
       <input
+        className="border border-gray-700 border-r-0 px-4 py-2 rounded-l-md"
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             handleSubmit()
@@ -29,7 +30,7 @@ export default function TodoList({
         type="text"
       />
       <button
-        className="border bg-blue-500 text-white px-4 py-2"
+        className="border border-gray-700 border-l-0 bg-green-600 dark:bg-green-800 rounded-r-md text-white px-4 py-2"
         onClick={handleSubmit}
       >
         Add Todo
