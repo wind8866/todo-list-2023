@@ -1,6 +1,6 @@
 - ✅next + tailwind
-- ⏳redux-tookit 1d
-- vue 1d
+- ~~redux-tookit 1d~~
+- ⏳vite 1d
 - qiankun 1d
 - 支持部署到 vercel
 
@@ -42,7 +42,7 @@ serverStatus: 2
 warningStatus: 0
 ```
 
-## 命令记录
+### 命令记录
 
 ```shell
 pnpm init
@@ -50,3 +50,7 @@ pnpm init
 # next目录下
 pnpm install @todo-list/server
 ```
+
+## Nuxt
+
+安装时选择 husky 并且不选择 git，需要删除这一行`"prepare": "husky install",`
