@@ -54,3 +54,7 @@ pnpm install @todo-list/server
 ## Nuxt
 
 安装时选择 husky 并且不选择 git，需要删除这一行`"prepare": "husky install",`
+
+- 怎么能自动导入 ITodo 类型？
+- 统一的接口处理
+-
