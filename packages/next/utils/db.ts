@@ -41,7 +41,7 @@ export async function dbQueryList(id?: number) {
   sql += ' order by create_time desc'
   const db = await dbConnection()
   const [rows, fields] = await db.execute<ITodo[] & RowDataPacket[][]>(sql)
-  return rows
+  return rows.map((row) => ({ ...row, finish: Boolean(row.finish) }))
 }
 
 // insert into main (text, create_time, finish) values ('mysql', '2016-05-06', 0);
@@ -83,6 +83,7 @@ export async function dbUpdateTodo(todo: Partial<ITodo>): Promise<ITodo> {
 
   const list = await dbQueryList(todo.id)
   if (list.length === 0) throw new Error('Not Found')
+  list[0].finish = Boolean(list[0].finish)
   return list[0]
 }
 
