@@ -1,5 +1,5 @@
 <template>
-  todolist index
+  <Header sub-title="Nuxt" />
   <div>
     <TodoList />
   </div>

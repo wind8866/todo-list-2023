@@ -76,7 +76,14 @@ async function onDelete(id: number) {
         {{ state.hideFinish ? 'Show' : 'Hide' }}
       </button>
       <ul>
-        <li @click="" v-for="(todo, index) in todosView" :key="todo.id">
+        <li
+          :class="{
+            'p-1': true,
+            'text-gray-400': todo.finish,
+          }"
+          v-for="(todo, index) in todosView"
+          :key="todo.id"
+        >
           <label class="cursor-pointer">
             <input
               type="checkbox"
@@ -84,7 +91,14 @@ async function onDelete(id: number) {
               :checked="todo.finish"
               @change="onFinish(index, todo.finish)"
             />
-            <span class="{textClassName}">{{ todo.text }}</span>
+            <span
+              :class="{
+                'inline-block': true,
+                'px-2': true,
+                'line-through': todo.finish,
+              }"
+              >{{ todo.text }}</span
+            >
           </label>
           <button @click="onDelete(todo.id)">删除</button>
         </li>
