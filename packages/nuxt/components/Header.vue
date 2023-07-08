@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import Logo from '@todo-list/next/public/logo.svg'
-defineProps({
-  subTitle: {
-    type: String,
-    default: null,
-  },
-})
+defineProps<{
+  subTitle?: string
+}>()
 </script>
 
 <template>
