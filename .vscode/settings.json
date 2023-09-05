@@ -1,0 +1,23 @@
+{
+    "editor.tabSize": 4,
+    "prettier.endOfLine": "lf",
+    "files.eol": "\n",
+
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "workbench.editor.wrapTabs": true,
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"],
+    "i18n-ally.localesPaths": [
+        "src/locales",
+        "src/locales/lang"
+    ],
+}
