@@ -6,6 +6,11 @@
 
 ## next
 
+202309
+- 使用 `web components` 实现
+- 使用 [stencil](https://github.com/ionic-team/stencil) 实现并提供向上的vue接口
+- 将所有项目接入微前端
+
 - 服务端渲染 ✅
   - 非交互组件使用服务端渲染，交互使用客户端
   - 已有数据直接返回而不是前端请求
