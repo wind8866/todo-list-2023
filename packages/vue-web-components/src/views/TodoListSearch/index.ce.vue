@@ -12,18 +12,11 @@ export default {
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { Props } from './type'
 const input = ref()
 function change() {
   // console.log(input.value)
   emits('change', input.value)
-}
-interface Props {
-  disabled: boolean
-  options: {
-    title: string
-    placehold: string
-    buttonText: string
-  }
 }
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,

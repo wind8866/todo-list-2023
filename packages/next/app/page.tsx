@@ -17,6 +17,11 @@ export default async function Page() {
             demo
           </Link>
         </li>
+        <li>
+          <Link className="underline" href="/ce">
+            web components
+          </Link>
+        </li>
       </ul>
     </div>
   )
