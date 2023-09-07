@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script type="module" src="./dist/vue-web-components.mjs"></script> -->
+
+    <script type="module">
+      import { register } from './dist/vue-web-components.mjs'
+      // import('./dist/vue-web-components.mjs').then((res) => {
+      //   console.log(res)
+      // })
+      // console.log(register)
+      register()
+
+      const ce = document.querySelector('#ce')
+      document.querySelector('#changeBtn').addEventListener('click', () => {
+        const newOptions = {
+          title: 'web 页面的 title',
+          placehold: '请在浏览器输入',
+          buttonText: '点击搜索'
+        }
+        // ce.setAttribute('options', )
+        ce.options = newOptions
+        ce.removeAttribute('disabled')
+      })
+      ce.addEventListener('change', (e) => {
+        console.log(e.detail)
+      })
+      console.dir(ce)
+
+      document.querySelector('#autoSearch').addEventListener('click', () => {
+        ce._instance.exposed.autoInput('买')
+      })
+    </script>
+  </head>
+  <body>
+    <todo-list-search id="ce" disabled title="hahah" options=""></todo-list-search>
+    <button id="changeBtn">change</button>
+    <button id="autoSearch">我想搜买东西</button>
+  </body>
+</html>

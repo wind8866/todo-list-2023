@@ -6,6 +6,16 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: { 'process.env.NODE_ENV': '"production"' },
+  build: {
+    target: 'modules',
+    minify: 'terser',
+    lib: {
+      entry: 'src/views/TodoListSearch/index.ts',
+      // formats: ['es', 'cjs', 'iife'],
+      name: 'TodoListSearch'
+    }
+  },
   plugins: [
     vue({
       template: {
@@ -14,8 +24,8 @@ export default defineConfig({
           isCustomElement: (tag) => tag.includes('-')
         }
       }
-    }),
-    vueJsx(),
+    })
+    // vueJsx()
   ],
   resolve: {
     alias: {

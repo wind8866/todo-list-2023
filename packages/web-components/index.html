@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body>
+    <div class="inline-block px-2 line-through"></div>
+    <template id="todo-item-template">
+      <li>
+        <label class="cursor-pointer">
+          <!-- <input
+            type="checkbox"
+            name="todo"
+            checked="{todo.finish}"
+            onChange="{change}"
+          /> -->
+          <span></span>
+          <button>删除</button>
+        </label>
+      </li>
+      <style>
+        .line-through {
+          text-decoration-line: line-through;
+        }
+        .px-2 {
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+        .inline-block {
+          display: inline-block;
+        }
+      </style>
+    </template>
+    <script>
+      // <TodoItem
+      //     key={todo.id}
+      //     todo={todo}
+      //     onFinish={onFinish}
+      //     onDelete={onDelete}
+      //   />
+      document.addEventListener('DOMContentLoaded', (event) => {
+        console.log('DOM 完全加载和解析')
+        initialTodoItem()
+        document.querySelector('#item').addEventListener('finish', (event) => {
+          console.log('是否完成', this, event, event.detail)
+          const currentStatus =
+            event.currentTarget.getAttribute('finish') === '1'
+          event.currentTarget.setAttribute('finish', currentStatus ? '0' : '1')
+        })
+      })
+      function initialTodoItem() {
+        class TodoItem extends HTMLElement {
+          static get observedAttributes() {
+            return ['id', 'text', 'finish', 'createtime']
+          }
+          ready = false
+          initial() {
+            this.root = document.querySelector('#item')
+            this.root.attachShadow({ mode: 'open' })
+            this.ready = true
+          }
+          render() {
+            console.log(this.root)
+            this.root.shadowRoot.innerHTML = ''
+            this.props = {
+              id: this.getAttribute('data-id'),
+              text: this.getAttribute('text'),
+              finish: this.getAttribute('finish') === '1',
+              createtime: new Date(Number(this.getAttribute('createtime'))),
+            }
+            console.log('props', this.props)
+
+            let textClassName = 'inline-block px-2'
+            let liClassName = 'p-1'
+            if (this.props.finish) {
+              textClassName += ' line-through'
+              liClassName += ' text-gray-400'
+            }
+            console.log(textClassName)
+            this.template = document.querySelector('#todo-item-template')
+            this.elem = this.template.content.cloneNode(true)
+            this.value = this.elem.querySelector('span')
+            this.value.setAttribute('class', textClassName)
+            this.input = this.elem.querySelector('input')
+            const that = this
+            this.button = this.elem.querySelector('button')
+            this.value.addEventListener('click', (e) => {
+              this.value.dispatchEvent(
+                new CustomEvent('finish', {
+                  bubbles: true,
+                  composed: true,
+                  detail: {
+                    id: that.props.id,
+                  },
+                }),
+              )
+            })
+            this.value.innerText = this.props.text
+            this.root.shadowRoot.append(this.elem)
+          }
+          attributeChangedCallback(name, oldValue, newValue) {
+            console.log(name, oldValue, newValue)
+            if (this.ready) {
+              this.render()
+            }
+          }
+          connectedCallback() {
+            this.initial()
+            this.render()
+            // 在元素被添加到文档之后，浏览器会调用这个方法
+            //（如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用）
+          }
+        }
+        customElements.define('todo-item', TodoItem)
+      }
+    </script>
+    <todo-item
+      id="item"
+      data-id="1"
+      text="web components"
+      finish="0"
+      createtime="1693925724721"
+    ></todo-item>
+    <script></script>
+  </body>
+</html>
