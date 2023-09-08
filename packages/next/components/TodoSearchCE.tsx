@@ -1,10 +1,14 @@
 'use client'
 import type { Props } from '../../vue-web-components/src/views/TodoListSearch/type'
-import { useEffect, useRef } from 'react'
+import { PropsWithChildren, useEffect, useRef } from 'react'
 import { register } from '../../vue-web-components/dist/vue-web-components.mjs'
 register()
-export default function Page(props: Props) {
+export default function Page(props: PropsWithChildren<Props>) {
+  const refCE = useRef<any>()
   useEffect(() => {
+    console.dir(refCE.current)
+    // refCE.current._instance vue实例
+    // refCE.current.shadowRoot
     refCE.current.addEventListener('change', (e) => {
       console.log(e.detail)
     })
@@ -13,7 +17,6 @@ export default function Page(props: Props) {
     }
   }, [])
 
-  const refCE = useRef<any>()
   function onChangeState() {
     const newOptions = {
       title: 'web 页面的 title',
@@ -38,6 +41,8 @@ export default function Page(props: Props) {
     refCE.current.options = props.options
     refCE.current.disabled = props.disabled
   }, [props])
+  function changeInnerStyle() {}
+
   return (
     <div>
       {/* 直接赋值也不好使 */}
@@ -48,12 +53,30 @@ export default function Page(props: Props) {
         disabled
         title={props.options.title}
         options=""
-      ></todo-list-search>
+      >
+        {props.children}
+      </todo-list-search>
       <div>
-        <button onClick={onChangeState}>change</button>
+        <button
+          className="border border-gray-700 border-l-0 bg-green-600 dark:bg-green-800 rounded-r-md text-white px-4 py-2"
+          onClick={onChangeState}
+        >
+          change
+        </button>
       </div>
       <div>
-        <button onClick={autoSearch}>我想搜买东西</button>
+        <button
+          className="border border-gray-700 border-l-0 bg-green-600 dark:bg-green-800 rounded-r-md text-white px-4 py-2"
+          onClick={autoSearch}
+        >
+          我想搜买东西
+        </button>
+        <button
+          className="border border-gray-700 border-l-0 bg-green-600 dark:bg-green-800 rounded-r-md text-white px-4 py-2"
+          onClick={changeInnerStyle}
+        >
+          我想改变内部样式
+        </button>
       </div>
     </div>
   )

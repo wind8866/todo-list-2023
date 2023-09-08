@@ -4,5 +4,6 @@ export interface Props {
     title: string
     placehold: string
     buttonText: string
+    hotWords?: string[]
   }
 }
