@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<Props>(), {
     title: 'default title',
     placehold: 'default placehold',
     buttonText: 'default buttonText',
+    // 外部改变内部样式3：通过参数
+    titleStyle: {},
     hotWords: []
   })
 })
@@ -47,7 +49,7 @@ defineExpose({
       <input type="text" v-model="input" @input="change" />
       <button>搜索</button>
       <div>
-        常用搜索：
+        <h2 :style="props.options.titleStyle">常用搜索：</h2>
         <ul>
           <slot>
             <li :key="word" v-for="word of props.options.hotWords" @click="input = word">
@@ -60,10 +62,13 @@ defineExpose({
   </div>
 </template>
 <style>
+:host {
+  --title-color: #944;
+}
 h1 {
   margin-top: 0;
   font-size: 20px;
-  color: #944;
+  color: var(--title-color, '#944');
 }
 :host > div {
   background-color: #eee;

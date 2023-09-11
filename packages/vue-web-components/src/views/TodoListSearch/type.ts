@@ -1,3 +1,5 @@
+import type { StyleValue } from 'vue/dist/vue.js'
+
 export interface Props {
   disabled: boolean
   options: {
@@ -5,5 +7,6 @@ export interface Props {
     placehold: string
     buttonText: string
     hotWords?: string[]
+    titleStyle?: StyleValue
   }
 }

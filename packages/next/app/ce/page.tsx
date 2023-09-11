@@ -2,6 +2,7 @@
 import type { Props } from '../../../vue-web-components/src/views/TodoListSearch/type'
 import { useEffect, useRef, useState } from 'react'
 import ToDoSearchCE from '../../components/TodoSearchCE'
+import './index.css'
 
 export default function Page() {
   const [params, setParams] = useState<Props>({
@@ -21,6 +22,9 @@ export default function Page() {
         placehold: '请在浏览器输入 改变了',
         buttonText: '点击搜索 改变了',
         hotWords: ['买菜', '打卡'],
+        titleStyle: {
+          color: '#999',
+        },
       },
     })
   }
@@ -29,9 +33,8 @@ export default function Page() {
       <ToDoSearchCE {...params}>
         {params.options.hotWords?.map((word) => (
           <span
-            className="bg-orange-400"
+            className="bg-gray-200 hover:bg-gray-300"
             style={{
-              background: '#eee',
               padding: '0.1em 0.3em',
               border: '1px solid #999',
               borderRadius: '4px',

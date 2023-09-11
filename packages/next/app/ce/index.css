@@ -1,0 +1,10 @@
+
+/* 外部改变内部样式1：css变量 */
+todo-list-search {
+    --title-color: #494;
+    outline: 2px dashed #e00;
+    opacity: 0.7;
+}
+todo-list-search:hover {
+    opacity: 1;
+}

@@ -41,7 +41,16 @@ export default function Page(props: PropsWithChildren<Props>) {
     refCE.current.options = props.options
     refCE.current.disabled = props.disabled
   }, [props])
-  function changeInnerStyle() {}
+  function changeInnerStyle() {
+    // 外部改变内部样式2：
+    const styleDOM = document.createElement('style')
+    const css = document.createTextNode(
+      `h1:before{content: "#";padding-right: 3px;}`,
+    )
+    styleDOM.appendChild(css)
+    refCE.current.shadowRoot.append(styleDOM)
+    refCE.current.shadowRoot.querySelector('h1').style = 'font-weight: initial'
+  }
 
   return (
     <div>
@@ -56,14 +65,14 @@ export default function Page(props: PropsWithChildren<Props>) {
       >
         {props.children}
       </todo-list-search>
-      <div>
+      {/* <div>
         <button
           className="border border-gray-700 border-l-0 bg-green-600 dark:bg-green-800 rounded-r-md text-white px-4 py-2"
           onClick={onChangeState}
         >
           change
         </button>
-      </div>
+      </div> */}
       <div>
         <button
           className="border border-gray-700 border-l-0 bg-green-600 dark:bg-green-800 rounded-r-md text-white px-4 py-2"
