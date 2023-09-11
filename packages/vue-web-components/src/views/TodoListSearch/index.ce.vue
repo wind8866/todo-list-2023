@@ -46,8 +46,8 @@ defineExpose({
     <h1>{{ props.options.title }}</h1>
     {{ props.disabled }}
     <span>
-      <input type="text" v-model="input" @input="change" />
-      <button>搜索</button>
+      <input :placehold="props.options.placehold" type="text" v-model="input" @input="change" />
+      <button>{{ props.options.buttonText }}</button>
       <div>
         <h2 :style="props.options.titleStyle">常用搜索：</h2>
         <ul>
