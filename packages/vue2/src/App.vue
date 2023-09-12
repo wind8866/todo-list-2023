@@ -1,16 +1,24 @@
 <template>
   <div id="app">
-    <TodoSearchCE msg="Welcome to Your Vue.js App"/>
+    <HelloWorld />
+    <hr />
+    <!-- <TodoSearchCE msg="Welcome to Your Vue.js App"/> -->
+    <hr/>
+    <TodoSearch/>
   </div>
 </template>
 
 <script>
-import TodoSearchCE from './components/TodoSearchCE.vue'
+// import TodoSearchCE from './components/TodoSearchCE.vue'
+import TodoSearch from './components/TodoSearch.vue'
+import HelloWorld from './components/HelloWorld.vue';
 
 export default {
   name: 'App',
   components: {
-    TodoSearchCE
+    HelloWorld,
+    // TodoSearchCE,
+    TodoSearch,
   }
 }
 </script>

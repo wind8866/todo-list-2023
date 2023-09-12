@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
   plugins:[
-    {src: '../vue-web-components/dist-lib/vue-web-components.mjs', ssr: false}
+    {src: '../vue-web-components/dist-vue/vue-web-components.mjs', ssr: false}
   ],
   postcss: {
     plugins: {

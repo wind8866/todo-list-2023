@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import TodoListSearch from './views/TodoListSearch/index.ce.vue'
 
+// import Home from '../../vue3/dist-lib/vue3.mjs'
+
 import { register } from './views/TodoListSearch/index'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
@@ -26,6 +28,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <!-- <Home /> -->
     <TodoListSearch
       ref="vueRef"
       disabled
