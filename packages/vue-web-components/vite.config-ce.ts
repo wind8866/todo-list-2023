@@ -11,7 +11,7 @@ export default defineConfig({
     target: 'modules',
     minify: 'terser',
     lib: {
-      entry: 'src/views/TodoListSearch/index.ts',
+      entry: 'src/views/TodoListSearch/ce.ts',
       // formats: ['es', 'cjs', 'iife'],
       name: 'TodoListSearch'
     }
